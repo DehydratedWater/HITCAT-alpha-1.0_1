@@ -51,6 +51,7 @@ public class GameScreen implements Screen, GameConstants{
 		
 		testText = new Texture("Cat.png");
 		
+		
 	}
 
 	@Override

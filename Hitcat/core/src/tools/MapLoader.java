@@ -6,7 +6,8 @@ import java.util.HashMap;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
-public class MapLoader {
+public class MapLoader 
+{
 	private TmxMapLoader maploader;
 	private ArrayList <TiledMap> maps;
 	private HashMap <String, Integer> indexes;
