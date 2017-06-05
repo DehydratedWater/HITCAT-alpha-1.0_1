@@ -1,18 +1,13 @@
 package screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,13 +15,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hitcat.GameConstants;
 import com.hitcat.Hitcat;
 
+import characters.Cat;
+import tools.InputManager;
 import tools.MapLoader;
+import tools.TiledMapRenderer;
 
 public class GameScreen implements Screen, GameConstants{
 	
 	private Hitcat game;
 	private TiledMap map;
-	private IsometricTiledMapRenderer renderer;
 	private AssetManager assetManager;
 	private OrthographicCamera cam;
 	private World world;
@@ -34,38 +31,52 @@ public class GameScreen implements Screen, GameConstants{
 	private FitViewport viewPort;
 	private SpriteBatch batch;
 	private MapLoader maps;
-	
-	private float TRANSLATION = 1;
+	private InputManager inputManager;
+	private TiledMapRenderer renderer;
+	private Cat cat;
+
+    private float SPEED= 4;
 	private float TRANSLATION = 20 / PPM;	
+	private float ZOOM = 5f / PPM;
+	private boolean isCameraLocked = true;
 	
 	
 	
-	private Texture testText;
-	private Sprite sprite;
 	
 	public GameScreen(Hitcat game){
 		this.game = game;
-		this.assetManager = game.assManager;
+		this.assetManager = game.assetManager;
 		
-		maps = new MapLoader();
+		
+		
+		inputManager = new InputManager();
+		
+		Gdx.input.setInputProcessor(inputManager);
+		
+		
+		maps = new MapLoader(assetManager);
 		
 		maps.addMap("TileMaps");
 		
-		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"));
-		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1/PPM);		
+			
 		cam = new OrthographicCamera();
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
 		
 		
-		cam.position.set(viewPort.getWorldWidth()/2, viewPort.getWorldHeight()/2, 0);
 		
 		world = new World(new Vector2(0,0), true);
 		b2rend = new Box2DDebugRenderer();
 		
 		batch = game.batch;
 		
-		testText = new Texture("Cat.png");
-		sprite = new Sprite(testText);
+		renderer = new TiledMapRenderer(maps.getMap("TileMaps"), cam,  1/PPM);	
+		
+		cat = new Cat(world, map, null);
+		
+		
+		
+		
+		
 		//sprite.scale(1/PPM);		
 	}
 
@@ -77,46 +88,71 @@ public class GameScreen implements Screen, GameConstants{
 	}
 	
 	private void handleInput(float delta){
-		if(Gdx.input.isKeyPressed(Input.Keys.PLUS)){
-	    	cam.zoom -= 0.2f / PPM;
+		if(inputManager.SCROLLED_UP){
+	    	cam.zoom -= ZOOM;
     		
     	}
     	
-		if(Gdx.input.isKeyPressed(Input.Keys.MINUS)){
-	    	cam.zoom += 0.2f / PPM;
+		if(inputManager.SCROLLED_DOWN){
+	    	cam.zoom += ZOOM;
     	}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT_BRACKET)){
+		if(inputManager.RIGHT_BRACKET){
 	    	TRANSLATION += 5 / PPM;
    
     	}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT_BRACKET)){
+		if(inputManager.LEFT_BRACKET){
 	    	TRANSLATION -= 5 / PPM;
     		
     	}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-	    	cam.translate(new Vector2(0, TRANSLATION));
+		if(inputManager.UP){
+			cam.translate(new Vector2(0, TRANSLATION));
     		
     	}
     	
-    	if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+    	if(inputManager.DOWN){
     		cam.translate(new Vector2(0, -TRANSLATION));
     	}
     	
-    	if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+    	if(inputManager.RIGHT){
     		cam.translate(new Vector2(TRANSLATION, 0));
     	}
     	
-    	if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+    	if(inputManager.LEFT){
     		cam.translate(new Vector2(-TRANSLATION, 0));
     	}
     	
-    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+    	if(inputManager.W){
+    		cat.b2Body.setLinearVelocity(0, SPEED * TRANSLATION);
+    	}
+    	
+    	if(inputManager.S){
+    		cat.b2Body.setLinearVelocity(0, -SPEED * TRANSLATION);
+    	}
+    	
+    	if(inputManager.D){
+    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, 0);
+    	}
+    	
+    	if(inputManager.A){
+    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, 0);
+    	}
+    	
+    	if(inputManager.BACKSPACE){
+    		cat.b2Body.setLinearVelocity(0, 0);
+    	}
+    	
+    	
+    	if(inputManager.SPACE){
+    		isCameraLocked = !isCameraLocked;
+    	}
+    	
+    	if(inputManager.ESCAPE){
     		Gdx.app.exit();
     	}
-		
+
 		
 	}
 
@@ -125,21 +161,33 @@ public class GameScreen implements Screen, GameConstants{
 		Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-		renderer.setView(cam);
-		renderer.render();
+        renderer.render();
 		
-		//game.batch.setProjectionMatrix(cam.combined);
+        b2rend.render(world, cam.combined);
+        
+        
+		game.batch.setProjectionMatrix(cam.combined);
+		
 		batch.begin();
-		sprite.draw(batch);		batch.end();
+		cat.catSprite.draw(batch);		
+		batch.end();
 	}
 	
 	private void update(float delta)
 	{
-     System.out.println(cam.position.x+" "+" "+cam.position.y);
+
+   if(isCameraLocked){	
+     cam.position.x = cat.b2Body.getPosition().x;
+     cam.position.y = cat.b2Body.getPosition().y;
+   }
+	world.step(1/60f, 6, 2);
+    
+	cat.update();
 	cam.update();
-	renderer.setView(cam);
-     System.out.println(cam.position.x+" "+" "+cam.position.y);
+	//renderer.setView(cam);
+    System.out.println(cam.position.x+" "+" "+cam.position.y);
 	 handleInput(delta);	
+	 inputManager.refreshInput();
 	}
 	
 	@Override
@@ -179,6 +227,7 @@ public class GameScreen implements Screen, GameConstants{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		renderer.dispose();
 		
 	}
 
