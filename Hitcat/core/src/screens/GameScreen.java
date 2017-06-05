@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,7 +34,7 @@ public class GameScreen implements Screen, GameConstants{
 	private SpriteBatch batch;
 	private MapLoader maps;
 	
-	private float TRANSLATION = 100 / GameConstants.PPM;
+	private float TRANSLATION = 5 / GameConstants.PPM;
 	
 	
 	
@@ -58,6 +59,7 @@ public class GameScreen implements Screen, GameConstants{
 		batch = game.batch;
 		
 		testText = new Texture("Cat.png");
+		
 		
 	}
 
@@ -90,11 +92,11 @@ public class GameScreen implements Screen, GameConstants{
 
 	private void draw(float delta)
 	{
+		Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 		renderer.setView(cam);
-		
-		
 		renderer.render();
-		
 		
 		batch.begin();
 		batch.draw(testText, 100, 100);
@@ -103,6 +105,7 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
+     System.out.println(cam.position.x+" "+" "+cam.position.y);
 	 handleInput(delta);	
 	}
 	
