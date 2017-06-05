@@ -3,6 +3,8 @@ package tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -12,11 +14,15 @@ public class MapLoader
 	private ArrayList <TiledMap> maps;
 	private HashMap <String, Integer> indexes;
 	private int index = 0;
+//	private AssetManager assManager;
 	
 	public MapLoader(){
 		maploader = new TmxMapLoader();
 		maps = new ArrayList<TiledMap>();
 		indexes = new HashMap<String, Integer>();
+		
+//		this.assManager = assManager;
+//		assManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 		
 	}
 	

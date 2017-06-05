@@ -50,7 +50,7 @@ public class GameScreen implements Screen, GameConstants{
 		
 		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1 / GameConstants.PPM);
 		
-		cam = new OrthographicCamera();
+		cam = new OrthographicCamera(V_WIDTH/PPM, V_HEIGHT/PPM);
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
 		
 		world = new World(new Vector2(0,0), true);
@@ -87,6 +87,10 @@ public class GameScreen implements Screen, GameConstants{
     	if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
     		cam.translate(new Vector2(-TRANSLATION, 0));
     	}
+    	
+    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+    		Gdx.app.exit();
+    	}
 		
 	}
 
@@ -105,7 +109,7 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
-     System.out.println(cam.position.x+" "+" "+cam.position.y);
+     System.out.println(cam.position.x+"  "+cam.position.y);
 	 handleInput(delta);	
 	}
 	
