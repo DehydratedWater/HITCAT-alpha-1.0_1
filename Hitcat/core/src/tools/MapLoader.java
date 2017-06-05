@@ -10,6 +10,7 @@ public class MapLoader {
 	private TmxMapLoader maploader;
 	private ArrayList <TiledMap> maps;
 	private HashMap <String, Integer> indexes;
+	private int index = 0;
 	
 	public MapLoader(){
 		maploader = new TmxMapLoader();
@@ -19,7 +20,9 @@ public class MapLoader {
 	}
 	
 	public void addMap(String name){
-		maps.add(maploader.load("assets/"+name+".tmx"));
+		maps.add(maploader.load(name+".tmx"));
+		indexes.put(name, index);
+		index++;
 		
 	}
 	
@@ -32,7 +35,7 @@ public class MapLoader {
 	}
 	
 	public TiledMap getMap(String name){
-		return maps.get(indexes.get(name));
+		return maps.get((int)indexes.get(name));
 	}
 
 }

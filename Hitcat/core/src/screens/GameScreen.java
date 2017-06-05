@@ -24,7 +24,7 @@ public class GameScreen implements Screen, GameConstants{
 	private TiledMap map;
 	private IsometricTiledMapRenderer renderer;
 	private AssetManager assetManager;
-	private Camera cam;
+	private OrthographicCamera cam;
 	private World world;
 	private Box2DDebugRenderer b2rend;
 	private FitViewport viewPort;
@@ -40,6 +40,10 @@ public class GameScreen implements Screen, GameConstants{
 		this.assetManager = game.assManager;
 		
 		maps = new MapLoader();
+		
+		maps.addMap("TileMaps");
+		
+		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1 / GameConstants.PPM);
 		
 		cam = new OrthographicCamera();
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
@@ -62,6 +66,12 @@ public class GameScreen implements Screen, GameConstants{
 
 	private void draw(float delta)
 	{
+		renderer.setView(cam);
+		
+		update(delta);
+		renderer.render();
+		
+		
 		batch.begin();
 		batch.draw(testText, 100, 100);
 		batch.end();
