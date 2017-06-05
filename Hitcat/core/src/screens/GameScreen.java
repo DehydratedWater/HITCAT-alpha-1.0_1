@@ -92,7 +92,7 @@ public class GameScreen implements Screen, GameConstants{
 	{
 		renderer.setView(cam);
 		
-		update(delta);
+		
 		renderer.render();
 		
 		
