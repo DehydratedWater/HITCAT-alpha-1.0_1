@@ -1,6 +1,7 @@
 package screens;
 
 import com.badlogic.gdx.Screen;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hitcat.GameConstants;
 import com.hitcat.Hitcat;
 
+import tools.MapLoader;
+
 public class GameScreen implements Screen, GameConstants{
 	
 	private Hitcat game;
@@ -26,12 +29,17 @@ public class GameScreen implements Screen, GameConstants{
 	private Box2DDebugRenderer b2rend;
 	private FitViewport viewPort;
 	private SpriteBatch batch;
+	private MapLoader maps;
+	
+	
 	
 	private Texture testText;
 	
 	public GameScreen(Hitcat game){
 		this.game = game;
 		this.assetManager = game.assManager;
+		
+		maps = new MapLoader();
 		
 		cam = new OrthographicCamera();
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);

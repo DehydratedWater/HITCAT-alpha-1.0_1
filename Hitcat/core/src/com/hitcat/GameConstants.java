@@ -10,4 +10,6 @@ public interface GameConstants
 	public static final int V_HEIGHT = 720;
 	public static final String title = "HitCat";
 	public static float PPM = 100;
+	public static String bossTracksLayer = "BOSS_TRACKS";
+	public static String obstacleLayer = "OBSTACLE_LAYER";
 }
