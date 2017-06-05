@@ -1,9 +1,11 @@
 package screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -67,11 +69,11 @@ public class GameScreen implements Screen, GameConstants{
 
 	private void draw(float delta)
 	{
+		Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 		renderer.setView(cam);
-		
-		update(delta);
 		renderer.render();
-		
 		
 		batch.begin();
 		batch.draw(testText, 100, 100);
