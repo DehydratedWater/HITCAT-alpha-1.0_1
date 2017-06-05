@@ -34,7 +34,7 @@ public class GameScreen implements Screen, GameConstants{
 	private SpriteBatch batch;
 	private MapLoader maps;
 	
-	private float TRANSLATION = 5 / GameConstants.PPM;
+	private float TRANSLATION = 1;
 	
 	
 	
@@ -48,10 +48,12 @@ public class GameScreen implements Screen, GameConstants{
 		
 		maps.addMap("TileMaps");
 		
-		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1 / GameConstants.PPM);
+		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"));
 		
 		cam = new OrthographicCamera();
-		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
+		viewPort = new FitViewport(V_WIDTH, V_HEIGHT, cam);
+		
+		cam.position.set(viewPort.getWorldWidth()/2, viewPort.getWorldHeight()/2, 0);
 		
 		world = new World(new Vector2(0,0), true);
 		b2rend = new Box2DDebugRenderer();
@@ -95,9 +97,9 @@ public class GameScreen implements Screen, GameConstants{
 		Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-		renderer.setView(cam);
 		renderer.render();
 		
+		game.batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 		batch.draw(testText, 100, 100);
 		batch.end();
@@ -105,6 +107,8 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
+	cam.update();
+	renderer.setView(cam);
      System.out.println(cam.position.x+" "+" "+cam.position.y);
 	 handleInput(delta);	
 	}
@@ -119,7 +123,8 @@ public class GameScreen implements Screen, GameConstants{
 	@Override
 	public void resize(int width, int height) 
 	{
-		
+		cam.viewportWidth = width;
+		cam.viewportHeight = height;
 		
 	}
 
