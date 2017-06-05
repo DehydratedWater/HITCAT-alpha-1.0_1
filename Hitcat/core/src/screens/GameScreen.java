@@ -62,7 +62,9 @@ public class GameScreen implements Screen, GameConstants{
 
 	private void draw(float delta)
 	{
-		
+		batch.begin();
+		batch.draw(testText, 100, 100);
+		batch.end();
 	}
 	
 	private void update(float delta)
