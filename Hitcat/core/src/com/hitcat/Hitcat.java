@@ -1,18 +1,19 @@
 package com.hitcat;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Hitcat extends ApplicationAdapter {
+import screens.GameScreen;
+
+public class Hitcat extends Game implements GameConstants
+{		
 	public SpriteBatch batch;
-	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;
-	public static float PPM = 100;
-	
-	
+	public AssetManager assManager;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
