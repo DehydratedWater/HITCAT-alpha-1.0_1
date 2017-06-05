@@ -34,7 +34,8 @@ public class GameScreen implements Screen, GameConstants{
 	private SpriteBatch batch;
 	private MapLoader maps;
 	
-	private float TRANSLATION = 5 / GameConstants.PPM;
+	private float TRANSLATION = 20 / GameConstants.PPM;
+	
 	
 	
 	
@@ -50,8 +51,11 @@ public class GameScreen implements Screen, GameConstants{
 		
 		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1 / GameConstants.PPM);
 		
-		cam = new OrthographicCamera(V_WIDTH/PPM, V_HEIGHT/PPM);
+		cam = new OrthographicCamera();
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
+		
+		
+		cam.position.set(viewPort.getWorldWidth()/2, viewPort.getWorldHeight()/2, 0);
 		
 		world = new World(new Vector2(0,0), true);
 		b2rend = new Box2DDebugRenderer();
@@ -59,6 +63,7 @@ public class GameScreen implements Screen, GameConstants{
 		batch = game.batch;
 		
 		testText = new Texture("Cat.png");
+	
 		
 		
 	}
@@ -71,6 +76,25 @@ public class GameScreen implements Screen, GameConstants{
 	}
 	
 	private void handleInput(float delta){
+		if(Gdx.input.isKeyPressed(Input.Keys.PLUS)){
+	    	cam.zoom -= 0.2f / PPM;
+    		
+    	}
+    	
+		if(Gdx.input.isKeyPressed(Input.Keys.MINUS)){
+	    	cam.zoom += 0.2f / PPM;
+    	}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT_BRACKET)){
+	    	TRANSLATION += 5 / PPM;
+   
+    	}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT_BRACKET)){
+	    	TRANSLATION -= 5 / PPM;
+    		
+    	}
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 	    	cam.translate(new Vector2(0, TRANSLATION));
     		
@@ -92,6 +116,7 @@ public class GameScreen implements Screen, GameConstants{
     		Gdx.app.exit();
     	}
 		
+		
 	}
 
 	private void draw(float delta)
@@ -102,14 +127,18 @@ public class GameScreen implements Screen, GameConstants{
 		renderer.setView(cam);
 		renderer.render();
 		
+		game.batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		batch.draw(testText, 100, 100);
+		batch.draw(testText, 100/PPM, 100/PPM);
 		batch.end();
 	}
 	
 	private void update(float delta)
 	{
-     System.out.println(cam.position.x+"  "+cam.position.y);
+     System.out.println(cam.position.x+" "+" "+cam.position.y);
+	cam.update();
+	renderer.setView(cam);
+     System.out.println(cam.position.x+" "+" "+cam.position.y);
 	 handleInput(delta);	
 	}
 	
@@ -123,6 +152,8 @@ public class GameScreen implements Screen, GameConstants{
 	@Override
 	public void resize(int width, int height) 
 	{
+		cam.viewportWidth = width/PPM;
+		cam.viewportHeight = height/PPM;
 		
 		
 	}
