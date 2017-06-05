@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
@@ -34,12 +35,13 @@ public class GameScreen implements Screen, GameConstants{
 	private SpriteBatch batch;
 	private MapLoader maps;
 	
-	private float TRANSLATION = 20 / GameConstants.PPM;
-	
+	private float TRANSLATION = 1;
+	private float TRANSLATION = 20 / PPM;	
 	
 	
 	
 	private Texture testText;
+	private Sprite sprite;
 	
 	public GameScreen(Hitcat game){
 		this.game = game;
@@ -49,8 +51,8 @@ public class GameScreen implements Screen, GameConstants{
 		
 		maps.addMap("TileMaps");
 		
-		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1 / GameConstants.PPM);
-		
+		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"));
+		renderer = new IsometricTiledMapRenderer(maps.getMap("TileMaps"), 1/PPM);		
 		cam = new OrthographicCamera();
 		viewPort = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
 		
@@ -63,9 +65,8 @@ public class GameScreen implements Screen, GameConstants{
 		batch = game.batch;
 		
 		testText = new Texture("Cat.png");
-	
-		
-		
+		sprite = new Sprite(testText);
+		//sprite.scale(1/PPM);		
 	}
 
 	@Override
@@ -127,10 +128,9 @@ public class GameScreen implements Screen, GameConstants{
 		renderer.setView(cam);
 		renderer.render();
 		
-		game.batch.setProjectionMatrix(cam.combined);
+		//game.batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		batch.draw(testText, 100/PPM, 100/PPM);
-		batch.end();
+		sprite.draw(batch);		batch.end();
 	}
 	
 	private void update(float delta)
