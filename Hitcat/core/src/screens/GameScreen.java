@@ -1,5 +1,7 @@
 package screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -30,6 +32,8 @@ public class GameScreen implements Screen, GameConstants{
 	private FitViewport viewPort;
 	private SpriteBatch batch;
 	private MapLoader maps;
+	
+	private float TRANSLATION = 100 / GameConstants.PPM;
 	
 	
 	
@@ -63,6 +67,26 @@ public class GameScreen implements Screen, GameConstants{
 		
 		
 	}
+	
+	private void handleInput(float delta){
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+	    	cam.translate(new Vector2(0, TRANSLATION));
+    		
+    	}
+    	
+    	if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+    		cam.translate(new Vector2(0, -TRANSLATION));
+    	}
+    	
+    	if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+    		cam.translate(new Vector2(TRANSLATION, 0));
+    	}
+    	
+    	if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+    		cam.translate(new Vector2(-TRANSLATION, 0));
+    	}
+		
+	}
 
 	private void draw(float delta)
 	{
@@ -79,7 +103,7 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
-		
+	 handleInput(delta);	
 	}
 	
 	@Override
