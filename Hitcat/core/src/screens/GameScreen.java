@@ -2,11 +2,18 @@ package screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.hitcat.Hitcat;
 
 public class GameScreen implements Screen {
 	private Hitcat game;
 	private TiledMap map;
+	private IsometricTiledMapRenderer renderer;
+	private World world;
+	private Box2DDebugRenderer b2dr;
 	
 	
 	public GameScreen(Hitcat game){
