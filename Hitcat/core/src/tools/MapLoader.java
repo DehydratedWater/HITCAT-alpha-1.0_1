@@ -1,6 +1,8 @@
 package tools;
 
 
+
+
 import java.util.HashMap;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -8,9 +10,10 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
+
 public class MapLoader 
 {
-
+  
 	private AssetManager assetManager;
 	private HashMap <String, Integer> indexes;
 	private int index = 0;

@@ -17,7 +17,7 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 	public Sprite catSprite;
 	public Body b2Body;
 	
-	private int RADIUS = 10;
+	private int RADIUS = 30;
 	private final int CELL_SIZE = 64;
 	private float START_X = 6.4f;
 	private float START_Y = 3.6f;
@@ -25,12 +25,13 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 
 	public Cat(World world, TiledMap map, Circle bounds) {
 		super(world, map, bounds);
+		catSprite = new Sprite(new Texture("Cat.png"));
+		catSprite.setSize(CELL_SIZE / PPM, CELL_SIZE / PPM);
+		
 		defineBody();
 		
 		
-		catSprite = new Sprite(new Texture("Cat.png"));
-		catSprite.setPosition(b2Body.getPosition().x  - CELL_SIZE / 2 / PPM, b2Body.getPosition().y - CELL_SIZE/ 2 / PPM );
-		catSprite.setSize(CELL_SIZE / PPM, CELL_SIZE / PPM);
+		
 		
 	
 		
@@ -38,7 +39,7 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 	}
 	
 	public void update(){
-		catSprite.setPosition(b2Body.getPosition().x  - CELL_SIZE / 2, b2Body.getPosition().y - CELL_SIZE/2 );
+		catSprite.setPosition(b2Body.getPosition().x - catSprite.getWidth()/2, b2Body.getPosition().y - catSprite.getHeight()/2 );
 	}
 	
 	private void defineBody(){
@@ -55,6 +56,10 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 		fdef.friction = 0.2f;
 		
 		b2Body.createFixture(fdef);
+		
+		
+	
+	
 	}
 
 }

@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hitcat.GameConstants;
 
-public class CircleObstacle extends CircleInteractiveObject{
+public class CircleObstacle extends CircleInteractiveObject implements GameConstants{
 
 	public CircleObstacle(World world, TiledMap map, Circle bounds) {
 		super(world, map, bounds);
@@ -18,12 +18,12 @@ public class CircleObstacle extends CircleInteractiveObject{
 		CircleShape shape = new CircleShape();
 		
 		bdef.type = BodyDef.BodyType.StaticBody;
-		bdef.position.set((bounds.x + bounds.radius/2)/ GameConstants.PPM, (bounds.y+bounds.radius/2)/GameConstants.PPM);
+		bdef.position.set((bounds.x + bounds.radius/2)/ PPM, (bounds.y+bounds.radius/2)/PPM);
 		
          body = world.createBody(bdef);
 		
 		
-		shape.setRadius(bounds.radius / 2 /GameConstants.PPM);
+		shape.setRadius(bounds.radius / 2 /PPM);
 	    fdef.shape = shape;
 	    body.createFixture(fdef);
 	

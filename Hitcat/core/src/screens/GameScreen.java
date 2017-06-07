@@ -16,6 +16,7 @@ import com.hitcat.GameConstants;
 import com.hitcat.Hitcat;
 
 import characters.Cat;
+import tools.B2DWorldCreator;
 import tools.InputManager;
 import tools.MapLoader;
 import tools.TiledMapRenderer;
@@ -34,7 +35,7 @@ public class GameScreen implements Screen, GameConstants{
 	private InputManager inputManager;
 	private TiledMapRenderer renderer;
 	private Cat cat;
-
+	private B2DWorldCreator b2dWorldCreator;
     private float SPEED= 4;
 	private float TRANSLATION = 20 / PPM;	
 	private float ZOOM = 5f / PPM;
@@ -69,6 +70,9 @@ public class GameScreen implements Screen, GameConstants{
 		
 		batch = game.batch;
 		
+		b2dWorldCreator = new B2DWorldCreator(world, maps.getMap("TileMaps"));
+		b2dWorldCreator.loadAllObjets();
+		
 		renderer = new TiledMapRenderer(maps.getMap("TileMaps"), cam,  1/PPM);	
 		
 		cat = new Cat(world, map, null);
@@ -90,6 +94,7 @@ public class GameScreen implements Screen, GameConstants{
 	private void handleInput(float delta){
 		if(inputManager.SCROLLED_UP){
 	    	cam.zoom -= ZOOM;
+	    	
     		
     	}
     	
@@ -138,6 +143,22 @@ public class GameScreen implements Screen, GameConstants{
     	
     	if(inputManager.A){
     		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, 0);
+    	}
+    	
+    	if(inputManager.W && inputManager.A ){
+    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, SPEED * TRANSLATION);
+    	}
+    	
+    	if(inputManager.W && inputManager.D ){
+    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, SPEED * TRANSLATION);
+    	}
+    	
+    	if(inputManager.S && inputManager.A ){
+    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, -SPEED * TRANSLATION);
+    	}
+    	
+    	if(inputManager.S && inputManager.D ){
+    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, -SPEED * TRANSLATION);
     	}
     	
     	if(inputManager.BACKSPACE){
