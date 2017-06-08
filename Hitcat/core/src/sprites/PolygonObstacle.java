@@ -15,14 +15,19 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 		
 		
 		//ustawianie punktu rotacji na œrodek mapy izometrycznej o wymiarach 20 x 20 kafelków
-	  //  bounds.setOrigin((float)(64 * Math.sqrt(2)) / 2 / PPM, 0);
-		bounds.setOrigin(bounds.getOriginX(), bounds.getOriginY());
+	    //bounds.setOrigin(20 * 64  / 2,  20 * 32  / 2);
+		//bounds.setOrigin(bounds.getOriginX(), bounds.getOriginY());
 	    
-		bounds.rotate(-90);
+		bounds.setOrigin(0,  0);
+		bounds.rotate(90);
+		
+		bounds.translate(0,  -20 * 32);
+		
 		
 		float vertices [] = bounds.getTransformedVertices();
 	        
 	        float worldVertices[] = new float[vertices.length];
+	        
 	        
 	       
 	       
