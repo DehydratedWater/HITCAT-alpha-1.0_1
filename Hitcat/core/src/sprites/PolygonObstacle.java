@@ -18,8 +18,7 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 	    //bounds.setOrigin(20 * 64  / 2,  20 * 32  / 2);
 		//bounds.setOrigin(bounds.getOriginX(), bounds.getOriginY());
 	    
-		bounds.setOrigin(0,  0);
-		bounds.rotate(90);
+		
 		
 		bounds.translate(0,  -20 * 32);
 		
