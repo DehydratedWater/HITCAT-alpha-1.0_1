@@ -36,7 +36,7 @@ public class GameScreen implements Screen, GameConstants{
 	private TiledMapRenderer renderer;
 	private Cat cat;
 	private B2DWorldCreator b2dWorldCreator;
-    private float SPEED = 6;
+    private float SPEED = 10;
 	private float TRANSLATION = 20 / PPM;	
 	private float ZOOM = 5f / PPM;
 	private boolean isCameraLocked = true;
@@ -57,7 +57,7 @@ public class GameScreen implements Screen, GameConstants{
 		
 		maps = new MapLoader(assetManager);
 		
-		maps.addMap("TileMaps");
+		maps.addMap("TileMaps2");
 		
 			
 		cam = new OrthographicCamera();
@@ -70,10 +70,10 @@ public class GameScreen implements Screen, GameConstants{
 		
 		batch = game.batch;
 		
-		b2dWorldCreator = new B2DWorldCreator(world, maps.getMap("TileMaps"));
+		b2dWorldCreator = new B2DWorldCreator(world, maps.getMap("TileMaps2"));
 		b2dWorldCreator.loadAllObjets();
 		
-		renderer = new TiledMapRenderer(maps.getMap("TileMaps"), cam,  1/PPM);	
+		renderer = new TiledMapRenderer(maps.getMap("TileMaps2"), cam,  1/PPM);	
 		
 		cat = new Cat(world, map, null);
 		
@@ -131,9 +131,13 @@ public class GameScreen implements Screen, GameConstants{
     		movX-=SPEED * TRANSLATION;
     	}
     	
-    	cat.b2Body.setLinearVelocity(movX, movY);
-    	
-    	
+    	if(isCameraLocked)
+    	 cat.b2Body.setLinearVelocity(movX, movY);
+    	else{
+    	 cam.position.x += movX / SPEED;
+    	 cam.position.y += movY / SPEED;
+    	}
+    
     	
     	
     	if(inputManager.SPACE){
@@ -154,7 +158,7 @@ public class GameScreen implements Screen, GameConstants{
         
         renderer.render();
 		
-        b2rend.render(world, cam.combined);
+        
         
         
 		game.batch.setProjectionMatrix(cam.combined);
@@ -162,6 +166,8 @@ public class GameScreen implements Screen, GameConstants{
 		batch.begin();
 		cat.catSprite.draw(batch);		
 		batch.end();
+		
+		b2rend.render(world, cam.combined);
 	}
 	
 	private void update(float delta)

@@ -1,5 +1,6 @@
 package sprites;
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,14 +16,18 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 		
 		
 		//ustawianie punktu rotacji na œrodek mapy izometrycznej o wymiarach 20 x 20 kafelków
-	  //  bounds.setOrigin((float)(64 * Math.sqrt(2)) / 2 / PPM, 0);
-		bounds.setOrigin(bounds.getOriginX(), bounds.getOriginY());
+	    //bounds.setOrigin(20 * 64  / 2,  20 * 32  / 2);
+		//bounds.setOrigin(bounds.getOriginX(), bounds.getOriginY());
 	    
-		bounds.rotate(-90);
+		//int mp = map.getProperties().get("hight", Integer.class);
+		
+//		bounds.translate(0,  -20 * 32);
+		
 		
 		float vertices [] = bounds.getTransformedVertices();
 	        
 	        float worldVertices[] = new float[vertices.length];
+	        
 	        
 	       
 	       
@@ -30,12 +35,22 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 	        
 	        float x, y;
 	        
+	        int mapWidth = map.getProperties().get("width", Integer.class);
+	        int mapHeight = map.getProperties().get("height", Integer.class);
+	        int tilePixelWidth = map.getProperties().get("tilewidth", Integer.class);
+	        int tilePixelHeight = map.getProperties().get("tileheight", Integer.class);
+	        
+	        
 	        for(int i = 0; i < vertices.length; i+=2){
-	        	vertices[i+1] += 20; //losowe przesuniêcie bo czemu nie
-	        	vertices[i] += 20;
 	        	
-	        	x = (vertices[i] - vertices[i+1]) ;
-	        	y = (vertices[i] + vertices[i+1]) / 2;
+	        	vertices[i] -= tilePixelWidth/4;
+	        	vertices[i+1] += tilePixelHeight/2; 
+	        	
+//	        	x = (vertices[i] - vertices[i+1]) ;
+//	        	y = (vertices[i] + vertices[i+1]) / 2;
+	        	
+	        	x = (vertices[i] + vertices[i+1]);
+	        	y = -(vertices[i] - vertices[i+1]) / 2;
 	        	
 	        	vertices[i] = x;
 	        	vertices[i+1] = y;
