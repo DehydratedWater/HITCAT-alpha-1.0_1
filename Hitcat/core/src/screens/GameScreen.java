@@ -131,9 +131,13 @@ public class GameScreen implements Screen, GameConstants{
     		movX-=SPEED * TRANSLATION;
     	}
     	
-    	cat.b2Body.setLinearVelocity(movX, movY);
-    	
-    	
+    	if(isCameraLocked)
+    	 cat.b2Body.setLinearVelocity(movX, movY);
+    	else{
+    	 cam.position.x += movX / SPEED;
+    	 cam.position.y += movY / SPEED;
+    	}
+    
     	
     	
     	if(inputManager.SPACE){
