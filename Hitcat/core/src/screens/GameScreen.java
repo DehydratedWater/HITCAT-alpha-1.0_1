@@ -176,7 +176,7 @@ public class GameScreen implements Screen, GameConstants{
 	cat.update();
 	cam.update();
 	//renderer.setView(cam);
-    System.out.println(cam.position.x+" "+" "+cam.position.y);
+    //System.out.println(cam.position.x+" "+" "+cam.position.y);
 	 handleInput(delta);	
 	 inputManager.refreshInput();
 	}
