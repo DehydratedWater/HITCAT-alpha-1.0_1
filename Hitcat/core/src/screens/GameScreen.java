@@ -36,7 +36,7 @@ public class GameScreen implements Screen, GameConstants{
 	private TiledMapRenderer renderer;
 	private Cat cat;
 	private B2DWorldCreator b2dWorldCreator;
-    private float SPEED= 4;
+    private float SPEED = 6;
 	private float TRANSLATION = 20 / PPM;	
 	private float ZOOM = 5f / PPM;
 	private boolean isCameraLocked = true;
@@ -112,58 +112,28 @@ public class GameScreen implements Screen, GameConstants{
     		
     	}
 		
-		if(inputManager.UP){
-			cam.translate(new Vector2(0, TRANSLATION));
+		float movX = 0, movY = 0;
+		
+		if(inputManager.UP||inputManager.W){
+			movY+=SPEED * TRANSLATION;
     		
     	}
     	
-    	if(inputManager.DOWN){
-    		cam.translate(new Vector2(0, -TRANSLATION));
+    	if(inputManager.DOWN||inputManager.S){
+    		movY-=SPEED * TRANSLATION;
     	}
     	
-    	if(inputManager.RIGHT){
-    		cam.translate(new Vector2(TRANSLATION, 0));
+    	if(inputManager.RIGHT||inputManager.D){
+    		movX+=SPEED * TRANSLATION;
     	}
     	
-    	if(inputManager.LEFT){
-    		cam.translate(new Vector2(-TRANSLATION, 0));
+    	if(inputManager.LEFT||inputManager.A){
+    		movX-=SPEED * TRANSLATION;
     	}
     	
-    	if(inputManager.W){
-    		cat.b2Body.setLinearVelocity(0, SPEED * TRANSLATION);
-    	}
+    	cat.b2Body.setLinearVelocity(movX, movY);
     	
-    	if(inputManager.S){
-    		cat.b2Body.setLinearVelocity(0, -SPEED * TRANSLATION);
-    	}
     	
-    	if(inputManager.D){
-    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, 0);
-    	}
-    	
-    	if(inputManager.A){
-    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, 0);
-    	}
-    	
-    	if(inputManager.W && inputManager.A ){
-    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, SPEED * TRANSLATION);
-    	}
-    	
-    	if(inputManager.W && inputManager.D ){
-    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, SPEED * TRANSLATION);
-    	}
-    	
-    	if(inputManager.S && inputManager.A ){
-    		cat.b2Body.setLinearVelocity(-SPEED * TRANSLATION, -SPEED * TRANSLATION);
-    	}
-    	
-    	if(inputManager.S && inputManager.D ){
-    		cat.b2Body.setLinearVelocity(SPEED * TRANSLATION, -SPEED * TRANSLATION);
-    	}
-    	
-    	if(inputManager.BACKSPACE){
-    		cat.b2Body.setLinearVelocity(0, 0);
-    	}
     	
     	
     	if(inputManager.SPACE){
