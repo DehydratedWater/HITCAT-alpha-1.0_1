@@ -52,7 +52,6 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 		CircleShape shape = new CircleShape();
 		shape.setRadius(RADIUS / PPM);
 		fdef.shape = shape;
-		fdef.density = 10;
 		fdef.friction = 0.2f;
 		
 		b2Body.createFixture(fdef);
