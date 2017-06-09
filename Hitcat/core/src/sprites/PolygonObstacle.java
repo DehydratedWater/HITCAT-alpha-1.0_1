@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hitcat.GameConstants;
 
+import tools.ToolBox;
+
 public class PolygonObstacle extends PolygonInteractiveObject implements GameConstants{
 
 	public PolygonObstacle(World world, TiledMap map, Polygon bounds) {
@@ -29,7 +31,7 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 	        float worldVertices[] = new float[vertices.length];
 	        
 	        
-	       
+	     
 	       
 	        //transformacja do rzutu izometrycznego 
 	        
@@ -56,8 +58,18 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 	        	vertices[i+1] = y;
 	        	
 	        }
-	       
 	        
+	        
+//	       ToolBox.setTileSize(map);
+//	       for(int i = 0; i < vertices.length; i+=2)
+//	       {
+//	    	   float[] tab = ToolBox.translateIsometricView(new float[]{vertices[i], vertices[i+1]});
+//	    	   vertices[i] = tab[0];
+//	    	   vertices[i+1] = tab[1];
+//	    			   
+//	       }
+	       
+	       
 	        //szkalowanie wierzcho³ków
 	        
 	        for(int i = 0; i < vertices.length; i++){
