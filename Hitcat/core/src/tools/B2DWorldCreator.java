@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hitcat.GameConstants;
 
+import routes.BossTrack;
 import routes.PolylineBossTracks;
 import sprites.CircleObstacle;
 import sprites.PolygonObstacle;
@@ -27,7 +28,7 @@ import sprites.RectangleObstacle;
 public class B2DWorldCreator implements GameConstants {
 
 	public ArrayList<PolygonObstacle> polygons;
-	public ArrayList<PolylineObstacle> polylines;
+	public ArrayList<BossTrack> polylines;
 	private PolylineBossTracks bossTracks;
     private World world;
     private TiledMap map;
@@ -38,7 +39,7 @@ public class B2DWorldCreator implements GameConstants {
 		
 		polygons = new ArrayList<PolygonObstacle>();
 		bossTracks = new PolylineBossTracks();
-		polylines = new ArrayList<PolylineObstacle>();
+		polylines = new ArrayList<BossTrack>();
 		
 		
 	}
@@ -47,7 +48,7 @@ public class B2DWorldCreator implements GameConstants {
 		for(MapObject object : map.getLayers().get(bossTracksLayer).getObjects().getByType(PolylineMapObject.class)){
 			Polyline polyline = ((PolylineMapObject) object).getPolyline();
 			bossTracks.addTrack(polyline);
-			polylines.add(new PolylineObstacle(world, map, polyline));
+			polylines.add(new BossTrack(world, map, polyline));
 		}
 		
 		for(MapObject object : map.getLayers().get(obstacleLayer).getObjects().getByType(EllipseMapObject.class)){

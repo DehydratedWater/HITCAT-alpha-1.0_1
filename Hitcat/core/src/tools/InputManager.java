@@ -81,7 +81,13 @@ public class InputManager implements InputProcessor{
 			BACKSPACE = true;
 		}
 		
+		if(keycode == Keys.PLUS){
+			PLUS = true;
+		}
 		
+		if(keycode == Keys.MINUS){
+			MINUS = true;
+		}
 		return false;
 	}
 
@@ -153,6 +159,13 @@ public class InputManager implements InputProcessor{
 		if(keycode == Keys.BACKSPACE){
 			BACKSPACE = false;
 		}
+		if(keycode == Keys.PLUS){
+			PLUS = false;
+		}
+		
+		if(keycode == Keys.MINUS){
+			MINUS = false;
+		}
 		return false;
 	}
 
@@ -182,7 +195,7 @@ public class InputManager implements InputProcessor{
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
+		System.out.println(screenX+" "+screenY);
 		return false;
 	}
 	

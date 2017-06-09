@@ -20,6 +20,7 @@ import tools.B2DWorldCreator;
 import tools.InputManager;
 import tools.MapLoader;
 import tools.TiledMapRenderer;
+import tools.ToolBox;
 
 public class GameScreen implements Screen, GameConstants{
 	
@@ -41,7 +42,7 @@ public class GameScreen implements Screen, GameConstants{
 	private float ZOOM = 5f / PPM;
 	private boolean isCameraLocked = true;
 	
-	
+	private float positon = 0;
 	
 	
 	public GameScreen(Hitcat game){
@@ -92,10 +93,22 @@ public class GameScreen implements Screen, GameConstants{
 	}
 	
 	private void handleInput(float delta){
+		
+		if(inputManager.PLUS){
+	    	positon += 0.001f;
+	    	if(positon>1)
+				positon=1;
+    	}
+    	
+		if(inputManager.MINUS){
+			positon -= 0.001f;
+			if(positon<0)
+				positon=0;
+    	}
+		
+		
 		if(inputManager.SCROLLED_UP){
 	    	cam.zoom -= ZOOM;
-	    	
-    		
     	}
     	
 		if(inputManager.SCROLLED_DOWN){
@@ -148,6 +161,7 @@ public class GameScreen implements Screen, GameConstants{
     		Gdx.app.exit();
     	}
 
+    	
 		
 	}
 
@@ -172,7 +186,14 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
-
+	float pos[] = b2dWorldCreator.polylines.get(0).getPositionOnTrack(positon);
+	pos = ToolBox.reverseIsometricTransform(pos);
+	float pos2[] = ToolBox.reverseIsometricTransform(new float[]{pos[2], pos[3]});
+	cat.b2Body.setTransform(pos[0], pos[1], 0);
+	cat.b2Body.setLinearVelocity(pos2[0], pos2[1]);
+	
+//	System.out.println("Start point pos: "+pos[0]+" "+pos[1]);
+//	System.out.println("Cat pos: "+cat.b2Body.getPosition());	
    if(isCameraLocked){	
      cam.position.x = cat.b2Body.getPosition().x;
      cam.position.y = cat.b2Body.getPosition().y;

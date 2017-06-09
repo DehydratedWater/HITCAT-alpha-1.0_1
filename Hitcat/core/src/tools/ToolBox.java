@@ -8,6 +8,13 @@ public class ToolBox implements GameConstants
 {
 	private static float tilePixelWidth;
 	private static float tilePixelHeight;
+	private static int mapWidth;
+	private static int mapHeight;
+	
+	public static final float getDistanceBetwenPoints(float x1, float y1, float x2, float y2)
+	{
+		return (float) Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+	}
 	
 	public static final float[] translateIsometricPoint(float[] point)
 	{
@@ -24,10 +31,27 @@ public class ToolBox implements GameConstants
     	x = (point[0] + point[1]);
     	y = -(point[0] - point[1]) / 2;
     	
-    	point[0] = x;
-    	point[1] = y;
+    	point[0] = x / PPM;;
+    	point[1] = y / PPM;;
     	
     	return point;
+	}
+	
+	public static final float[] reverseIsometricTransform(float[] vertices)
+	{
+		vertices[1]*=2;
+		float x, y;
+		y = (vertices[0] + vertices[1])/2;
+		x = vertices[0] - y;
+		
+		x += tilePixelWidth/4;
+    	y -= tilePixelHeight/2;
+    	
+    	
+    	vertices[0] = x-15.8f;
+    	vertices[1] = y+15.85f;
+    	
+    	return vertices;
 	}
 	
 	public static final float[] translateIsometricArray(float[] vertices)
@@ -64,5 +88,7 @@ public class ToolBox implements GameConstants
 	{
 		tilePixelWidth = map.getProperties().get("tilewidth", Integer.class);
         tilePixelHeight = map.getProperties().get("tileheight", Integer.class);
+        mapWidth = map.getProperties().get("width", Integer.class);
+        mapHeight = map.getProperties().get("height", Integer.class);
 	}
 }
