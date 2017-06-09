@@ -21,11 +21,13 @@ import com.hitcat.GameConstants;
 import routes.PolylineBossTracks;
 import sprites.CircleObstacle;
 import sprites.PolygonObstacle;
+import sprites.PolylineObstacle;
 import sprites.RectangleObstacle;
 
 public class B2DWorldCreator implements GameConstants {
 
 	public ArrayList<PolygonObstacle> polygons;
+	public ArrayList<PolylineObstacle> polylines;
 	private PolylineBossTracks bossTracks;
     private World world;
     private TiledMap map;
@@ -36,7 +38,7 @@ public class B2DWorldCreator implements GameConstants {
 		
 		polygons = new ArrayList<PolygonObstacle>();
 		bossTracks = new PolylineBossTracks();
-		
+		polylines = new ArrayList<PolylineObstacle>();
 		
 		
 	}
@@ -45,6 +47,7 @@ public class B2DWorldCreator implements GameConstants {
 		for(MapObject object : map.getLayers().get(bossTracksLayer).getObjects().getByType(PolylineMapObject.class)){
 			Polyline polyline = ((PolylineMapObject) object).getPolyline();
 			bossTracks.addTrack(polyline);
+			polylines.add(new PolylineObstacle(world, map, polyline));
 		}
 		
 		for(MapObject object : map.getLayers().get(obstacleLayer).getObjects().getByType(EllipseMapObject.class)){

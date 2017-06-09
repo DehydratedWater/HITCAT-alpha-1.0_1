@@ -18,4 +18,9 @@ public class PolylineBossTracks {
 	public Polyline getTrack(int index){
 		return tracks.get(index);
 	}
+	
+	public void transformPolyline(int i)
+	{
+		
+	}
 }
