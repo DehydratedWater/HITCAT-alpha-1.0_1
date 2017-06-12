@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.hitcat.GameConstants;
 
 import sprites.CircleInteractiveObject;
+import tools.ToolBox;
 
 public class Cat extends CircleInteractiveObject implements GameConstants{
 	public Sprite catSprite;
@@ -39,7 +40,9 @@ public class Cat extends CircleInteractiveObject implements GameConstants{
 	}
 	
 	public void update(){
-		catSprite.setPosition(b2Body.getPosition().x - catSprite.getWidth()/2, b2Body.getPosition().y - catSprite.getHeight()/2 );
+		//catSprite.setPosition(b2Body.getPosition().x - catSprite.getWidth()/2, b2Body.getPosition().y - catSprite.getHeight()/2 );
+		float pos[] = ToolBox.translateIsometricArrayNoScale(new float[]{b2Body.getPosition().x, b2Body.getPosition().y});
+		catSprite.setPosition(pos[0] - catSprite.getWidth()/2, pos[1] - catSprite.getHeight()/2 );
 	}
 	
 	private void defineBody(){

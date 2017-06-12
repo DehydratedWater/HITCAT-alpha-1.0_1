@@ -18,14 +18,16 @@ public class BossTrack
 	{
 		polyline = new PolylineObstacle(world, map, bounds);
 		ToolBox.setTileSize(map);
-		worldVertices = ToolBox.translateIsometricArray(bounds.getTransformedVertices());
+//		worldVertices = ToolBox.translateIsometricArray(bounds.getTransformedVertices());
+//		worldVertices = ToolBox.scaleByPPM(bounds.getTransformedVertices());
+		worldVertices = bounds.getTransformedVertices();
 		segments = new float[worldVertices.length/2-1];
 		int index = 0;
 		System.out.println("D³ugoœæ "+worldVertices.length);
 		for(int i = 0; i < worldVertices.length-2; i+=2)
 		{
 			System.out.println(index);
-			segments[index] = ToolBox.getDistanceBetwenPoints(worldVertices[i]/2, worldVertices[i+1], worldVertices[i+2]/2, worldVertices[i+3]);
+			segments[index] = ToolBox.getDistanceBetwenPoints(worldVertices[i], worldVertices[i+1], worldVertices[i+2], worldVertices[i+3]);
 			length+=segments[index];
 			index++;
 		}

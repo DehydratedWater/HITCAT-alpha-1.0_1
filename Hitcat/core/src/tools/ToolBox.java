@@ -84,6 +84,40 @@ public class ToolBox implements GameConstants
         return worldVertices;
 	}
 	
+	public static final float[] translateIsometricArrayNoScale(float[] vertices)
+	{
+		if(tilePixelHeight==0||tilePixelWidth==0)
+		{
+			Gdx.app.error("Not loaded Tile Map Tiles sizes", "Tile Map Tiles sizes: "+tilePixelWidth+" "+tilePixelHeight);
+			return null;
+		}
+        
+        float worldVertices[] = new float[vertices.length];
+        float x, y;    
+        for(int i = 0; i < vertices.length; i+=2){
+        	
+        	vertices[i] -= tilePixelWidth/4;
+        	vertices[i+1] += tilePixelHeight/2; 
+        	x = (vertices[i] + vertices[i+1]);
+        	y = -(vertices[i] - vertices[i+1]) / 2;
+        	
+        	vertices[i] = x;
+        	vertices[i+1] = y-15.75f;
+        	
+        }
+        
+        
+        return vertices;
+	}
+	
+	public static final float[] scaleByPPM(float[] vertices)
+	{
+		for(int i = 0; i < vertices.length; i++){
+			vertices[i] = vertices[i] / PPM;
+        }
+		return vertices;
+	}
+	
 	public static final void setTileSize(TiledMap map)
 	{
 		tilePixelWidth = map.getProperties().get("tilewidth", Integer.class);

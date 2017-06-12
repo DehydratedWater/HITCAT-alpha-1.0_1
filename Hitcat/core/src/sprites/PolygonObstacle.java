@@ -17,8 +17,9 @@ public class PolygonObstacle extends PolygonInteractiveObject implements GameCon
 		super(world, map, bounds);
 
 			ToolBox.setTileSize(map);
-	        float worldVertices[] = ToolBox.translateIsometricArray(bounds.getTransformedVertices());
+	        //float worldVertices[] = ToolBox.translateIsometricArray(bounds.getTransformedVertices());
 
+			float worldVertices[] = ToolBox.scaleByPPM(bounds.getTransformedVertices());
 			BodyDef bdef = new BodyDef();
 			FixtureDef fdef = new FixtureDef();
 			PolygonShape shape = new PolygonShape();

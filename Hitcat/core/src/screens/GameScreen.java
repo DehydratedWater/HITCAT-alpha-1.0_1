@@ -43,6 +43,7 @@ public class GameScreen implements Screen, GameConstants{
 	private boolean isCameraLocked = true;
 	
 	private float positon = 0;
+	private boolean catOnTrack;
 	
 	
 	public GameScreen(Hitcat game){
@@ -151,7 +152,10 @@ public class GameScreen implements Screen, GameConstants{
     	 cam.position.y += movY / SPEED;
     	}
     
-    	
+    	if(inputManager.C)
+    	{
+    		catOnTrack=!catOnTrack;
+    	}
     	
     	if(inputManager.SPACE){
     		isCameraLocked = !isCameraLocked;
@@ -186,17 +190,17 @@ public class GameScreen implements Screen, GameConstants{
 	
 	private void update(float delta)
 	{
+	if(catOnTrack)
+	{
 	float pos[] = b2dWorldCreator.polylines.get(0).getPositionOnTrack(positon);
-	pos = ToolBox.reverseIsometricTransform(pos);
-	float pos2[] = ToolBox.reverseIsometricTransform(new float[]{pos[2], pos[3]});
 	cat.b2Body.setTransform(pos[0], pos[1], 0);
-	cat.b2Body.setLinearVelocity(pos2[0], pos2[1]);
-	
+	}
 //	System.out.println("Start point pos: "+pos[0]+" "+pos[1]);
 //	System.out.println("Cat pos: "+cat.b2Body.getPosition());	
    if(isCameraLocked){	
-     cam.position.x = cat.b2Body.getPosition().x;
-     cam.position.y = cat.b2Body.getPosition().y;
+	 float pos2[] = ToolBox.translateIsometricArrayNoScale(new float[]{cat.b2Body.getPosition().x, cat.b2Body.getPosition().y});
+     cam.position.x = pos2[0];
+     cam.position.y = pos2[1];
    }
 	world.step(1/60f, 6, 2);
     

@@ -9,7 +9,7 @@ import com.badlogic.gdx.InputProcessor;
 public class InputManager implements InputProcessor{
  
 	public boolean UP, DOWN, RIGHT, LEFT, 
-	A, W, S, D, 
+	A, W, S, D, C, 
 	PLUS, MINUS, 
 	LEFT_CTRL, LEFT_SHIFT, 
 	SPACE, ESCAPE, BACKSPACE,
@@ -51,6 +51,10 @@ public class InputManager implements InputProcessor{
 		
 		if(keycode == Keys.D){
 			D = true;
+		}
+		
+		if(keycode == Keys.C){
+			C = true;
 		}
 		
 		if(keycode == Keys.CONTROL_LEFT){
@@ -130,6 +134,10 @@ public class InputManager implements InputProcessor{
 		
 		if(keycode == Keys.D){
 			D = false;
+		}
+		
+		if(keycode == Keys.C){
+			C = false;
 		}
 		
 		if(keycode == Keys.CONTROL_LEFT){
