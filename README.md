@@ -1,10 +1,11 @@
 # HITCAT-alpha-1.0_1
 
 Sterowanie:
-spacja - prze³¹czanie pomiêdzy trybem œledzenia kota, a wolnej kamery
-w, a, s, d - kierowanie cia³em kota 
+spacja - przeÅ‚Ä…czanie pomiÄ™dzy trybem Å›ledzenia kota, a wolnej kamery
+w, a, s, d - kierowanie ciaÅ‚em kota 
 backspace - unieruchomienie kota
 scroll - zoomowanie
-strza³ki - kierowanie kamer¹ (tylko przy wy³¹czonym trybie œledzenia kota)
-nawiasy kwadratowe - zwiêkszanie i zmniejszanie szybkoœci ruchu kota lub kamery 
+strzaÅ‚ki - kierowanie kamerÄ… (tylko przy wyÅ‚Ä…czonym trybie Å›ledzenia kota)
+nawiasy kwadratowe - zwiÄ™kszanie i zmniejszanie szybkoÅ›ci ruchu kota lub kamery 
 
+![alt text](https://github.com/DehydratedWater/HITCAT-alpha-1.0_1/blob/master/HitCat%20Dziennik/9.png)
